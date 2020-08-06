@@ -8,12 +8,21 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             text: "AAAAA",
+            loading: false
         };
     }
 
     // no event, just the raw text gets passed
     handleChange = (text) => {
         console.log(text);
+        this.setState({
+          loading: true
+        });
+        setTimeout(()=> {
+          this.setState({
+            loading:false
+          })
+        }, 1000)
         this.setState({ text });
     };
 
@@ -32,6 +41,7 @@ export default class App extends React.Component {
                     value={this.state.text}
                     onChangeText={this.handleChange}
                 />
+                <Text>{JSON.stringify(this.state.loading)}</Text>
             </View>
         );
     }
