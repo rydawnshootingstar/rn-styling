@@ -1,14 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import FlexGrid from './components/FlexGrid';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, View, TextInput } from "react-native";
+import FlexGrid from "./components/FlexGrid";
 
-export default function App() {
-  return (
-      <FlexGrid top="TOP" middle="MIDDLE" bottom="BOTTOM">
-        
-      </FlexGrid>
-  );
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            text: "AAAAA",
+        };
+    }
+
+    // no event, just the raw text gets passed
+    handleChange = (text) => {
+        console.log(text);
+        this.setState({ text });
+    };
+
+    render() {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <TextInput
+                    style={styles.inputText}
+                    placeholder={"enter something"}
+                    value={this.state.text}
+                    onChangeText={this.handleChange}
+                />
+            </View>
+        );
+    }
 }
 
-
+const styles = StyleSheet.create({
+    inputText: {
+        height: 50,
+        width: 200,
+        borderWidth: 2,
+        padding: 10,
+        borderRadius: 5,
+        borderColor: "#23abab",
+    },
+});

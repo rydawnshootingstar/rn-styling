@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         alignItems: "center",
         marginRight: 20,
-        marginTop: 20
+        marginTop: 20 
     },
 });
 
