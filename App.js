@@ -2,12 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableNativeFeedback } from "react-native";
 import FlexGrid from "./components/FlexGrid";
+import DiceRoller from './components/DiceRoller';
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: "AAAAA",
+            text: "",
             loading: false,
             bgColor: bgColor,
         };
@@ -34,6 +35,16 @@ export default class App extends React.Component {
         console.log(this.state.bgColor);
     };
 
+    handleLogIn = ()=> {
+      const rgb = `rgb(${this.getRandomRGB()}, ${this.getRandomRGB()},${this.getRandomRGB()})`;
+      console.log(rgb);
+      this.setState({bgColor: rgb});
+    }
+
+    getRandomRGB = ()=> {
+      return Math.floor((Math.random() * 256));
+    }
+
     render() {
         return (
             <View
@@ -41,6 +52,7 @@ export default class App extends React.Component {
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
+                    backgroundColor: this.state.bgColor
                 }}
             >
                 <TextInput
@@ -58,11 +70,13 @@ export default class App extends React.Component {
                     />
                 </View>
 
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={this.handleLogIn}>
                   <Text style={styles.CustomButton}>
                     Log In
                   </Text>
                 </TouchableNativeFeedback>
+
+                <DiceRoller />
             </View>
         );
     }
@@ -93,6 +107,9 @@ const styles = StyleSheet.create({
       width: 150,
       height: 50,
       color: "#fff",
-      backgroundColor: '#123aba'
+      backgroundColor: '#123aba',
+      shadowRadius: 5,
+      shadowColor: '#000',
+      shadowOffset: {width: 10, height: 10},
     }
 });
