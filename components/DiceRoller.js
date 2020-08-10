@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    View,
-    TouchableOpacity,
-    Image,
-    StyleSheet,
-    Text,
-} from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet, Text } from "react-native";
 
 class DiceRoller extends React.Component {
     constructor(props) {
@@ -56,23 +50,41 @@ class DiceRoller extends React.Component {
             <View
                 style={{
                     flex: 1,
+                    width: '100%',
+                    backgroundColor: "#E74292",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: '#E74292',
                 }}
             >
-                <Image
-                    style={styles.DiceStyle}
-                    source={
-                        this.state.diceValue === undefined
-                            ? this.state.dice6
-                            : this.state.diceValue
-                    }
-                />
-
-                <TouchableOpacity onPress={this.rollDice} activeOpacity={this.state.rolling ? 0.2 : 1}>
-                    <Text style={styles.RollStyle} >
-                        {this.state.rolling ? 'Rolling' : 'Roll'}
+                <View
+                    style={{
+                        height: "auto",
+                        flexDirection: "row",
+                    }}
+                >
+                    <Image
+                        style={styles.DiceStyle}
+                        source={
+                            this.state.diceValue === undefined
+                                ? this.state.dice6
+                                : this.state.diceValue
+                        }
+                    />
+                    <Image
+                        style={styles.DiceStyle}
+                        source={
+                            this.state.diceValue === undefined
+                                ? this.state.dice6
+                                : this.state.diceValue
+                        }
+                    />
+                </View>
+                <TouchableOpacity
+                    onPress={this.rollDice}
+                    activeOpacity={this.state.rolling ? 0.2 : 1}
+                >
+                    <Text style={styles.RollStyle}>
+                        {this.state.rolling ? "Rolling" : "Roll"}
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -82,8 +94,8 @@ class DiceRoller extends React.Component {
 
 const styles = StyleSheet.create({
     DiceStyle: {
-        height: 300,
-        width: 300,
+        height: 150,
+        width: 150,
     },
     RollStyle: {
         height: 50,
@@ -97,7 +109,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor: "#fff",
         borderWidth: 2,
-        fontWeight: 'bold'
+        fontWeight: "bold",
     },
 });
 
