@@ -11,19 +11,19 @@ let conversionValues = [];
 class CurrencyConverter extends React.Component {
     state = {
         dollarValue: undefined,
-        loading: true
+        loading: true,
+        errorMessage: ''
     };
 
     componentDidMount(){
         fetch('https://api.exchangeratesapi.io/latest?base=USD').then((res)=> {
-            res.json().then((res)=> {
-                
+        res.json().then((res)=> {
                 for(const [key, value]of Object.entries(res.rates)){
                     conversionValues.push({code: key, value});
                     this.setState({loading: false})
                 }
             })
-        }).catch((err)=> console.error(err))
+        }).catch((err)=> this.setState({errorMessage: "An error occured when fetching conversion values"}))
     }
  
     onChange = (value) => {
@@ -40,6 +40,7 @@ class CurrencyConverter extends React.Component {
                 <View>
                     <Image source={require('../assets/moneySpin.gif')} />
                     <Text>Loading...</Text>
+                    <Text style={styles.errorText}>{this.state.errorMessage}</Text>
                 </View>
                 :
               <ScrollView
@@ -99,6 +100,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#FFF2bb',
         textAlign: "center", marginBottom: 10
+    },
+    errorText: {
+        fontSize: 20,
+        color: '#E44236'
     },
     currencyInput: {
         fontSize: 20,
