@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, TextInput, Alert, Button, TouchableNativeFeedback } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Alert, Button, TouchableNativeFeedback } from "react-native";
 import FlexGrid from "./components/FlexGrid";
 import DiceRoller from './components/DiceRoller';
+import CurrencyConverter from './components/CurrencyConverter';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -47,7 +48,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <View
+            <SafeAreaView
                 style={{
                     flex: 1,
                     alignItems: "center",
@@ -76,8 +77,9 @@ export default class App extends React.Component {
                   </Text>
                 </TouchableNativeFeedback>
 
-                <DiceRoller />
-            </View>
+                {/* <DiceRoller /> */}
+                <CurrencyConverter />
+            </SafeAreaView>
         );
     }
 }
