@@ -1,35 +1,52 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, Image, TextInput } from "react-native";
 
 
-// hard coded lol numbers are from 8/11/20
 // keyboardType is cool
-const conversionValues = [
-    { code: "eur", value: 0.8494 },
-    { code: "gbp", value: 0.7639 },
-    { code: "inr", value: 74.64 },
-    { code: "aud", value: 1.396 },
-    { code: "cad", value: 1.33 },
-    { code: "sgd", value: 1.371 },
-    { code: "cny", value: 6.946 },
-    { code: "hkd", value: 7.75 },
-    { code: "krw", value: 1184.61 },
-    { code: "mxn", value: 22.4 },
-];
+
+// TODO: fix scrolling
+
+let conversionValues = [];
 
 class CurrencyConverter extends React.Component {
     state = {
         dollarValue: undefined,
+        loading: true
     };
 
+    componentDidMount(){
+        fetch('https://api.exchangeratesapi.io/latest?base=USD').then((res)=> {
+            res.json().then((res)=> {
+                
+                for(const [key, value]of Object.entries(res.rates)){
+                    conversionValues.push({code: key, value});
+                    this.setState({loading: false})
+                }
+            })
+        }).catch((err)=> console.error(err))
+    }
+ 
     onChange = (value) => {
         this.setState({
             dollarValue: value,
         });
     };
+   
     render() {
         return (
+            
             <SafeAreaView style={styles.container}>
+                {this.state.loading ? 
+                <View>
+                    <Image source={require('../assets/moneySpin.gif')} />
+                    <Text>Loading...</Text>
+                </View>
+                :
+              <ScrollView
+              style={{flex:1}}
+              contentContainerStyle={styles.container}
+              scrollEnabled={true}
+              >
                 <Text style={styles.header}>Currency Conversion</Text>
                 <Text style={styles.subheader}>Convert dollars to a number of different currencies</Text>
                 <TextInput
@@ -40,7 +57,7 @@ class CurrencyConverter extends React.Component {
                     style={styles.currencyInput}
                 />
                 <Text style={styles.originalCurrency}>
-                    {"usd:"}{" "}
+                    {"USD:"}{" "}
                     {this.state.dollarValue
                         ? parseFloat(this.state.dollarValue).toFixed(2)
                         : "0.00"}
@@ -48,7 +65,7 @@ class CurrencyConverter extends React.Component {
                 {conversionValues.map((currency, index) => (
                     <Text style={styles.convertedCurrency} key={index}>
                         {currency.code} :{" "}
-                        {this.state.dollarValue 
+                        {this.state.dollarValue
                             ? (
                                   parseFloat(this.state.dollarValue) *
                                   currency.value
@@ -56,6 +73,9 @@ class CurrencyConverter extends React.Component {
                             : "0.00"}
                     </Text>
                 ))}
+                </ScrollView> 
+              
+    }
             </SafeAreaView>
         );
     }
