@@ -8,7 +8,7 @@ const posts = [
         title: "Cookin with birb",
         subtitle: "He cook spaghetti",
         likes: 120000,
-        comments: 400,
+        comments: 4000,
         thumbnailImage: require("../assets/birdThumb.jpg"),
         mainImage: require("../assets/bird.png"),
         createdAt: new moment(),

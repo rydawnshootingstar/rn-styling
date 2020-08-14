@@ -46,21 +46,26 @@ const BirbPost = (props) => {
                 <Left>
                     <Button transparent>
                         <Icon active name='thumbs-up' />
+                        {/* must use renderText prop, cannot use a <Text></Text> wrapper for this! */}
                         <NumberFormat
-                                suffix={" Likes"}
-                                displayType={"text"}
-                                thousandSeparator
-                                value={likes}
-                                renderText={value=> (
-                                <Text>{value}</Text>
-                                )}
-                            />
+                            suffix={" Likes"}
+                            displayType={"text"}
+                            thousandSeparator
+                            value={likes}
+                            renderText={(value) => <Text>{value}</Text>}
+                        />
                     </Button>
                 </Left>
                 <Body>
                     <Button transparent>
                         <Icon active name='chatbubbles' />
-                        <Text>{`${comments} Comments`}</Text>
+                        <NumberFormat
+                            suffix={" Comments"}
+                            displayType={"text"}
+                            thousandSeparator
+                            value={comments}
+                            renderText={(value) => <Text>{value}</Text>}
+                        />
                     </Button>
                 </Body>
                 <Right>
