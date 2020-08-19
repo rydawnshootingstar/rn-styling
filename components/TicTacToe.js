@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Container, Header, Title, View, Text, Content } from "native-base";
+import {
+    Container,
+    Header,
+    Title,
+    View,
+    Text,
+    Button,
+    Content,
+} from "native-base";
 
 class TicTacToe extends Component {
     constructor(props) {
@@ -24,7 +32,6 @@ class TicTacToe extends Component {
                 middle.every((piece) => piece && piece === middle[0]) ||
                 bottom.every((piece) => piece && piece === top[0]))
         ) {
-            console.log("game over");
             this.setState({ winMessage: "x wins", gameOver: true });
         }
         // vertical wins
@@ -35,7 +42,6 @@ class TicTacToe extends Component {
                     top[index] === middle[index] &&
                     top[index] === bottom[index]
                 ) {
-                    console.log("game over");
                     this.setState({
                         winMessage: "x wins again",
                         gameOver: true,
@@ -49,10 +55,9 @@ class TicTacToe extends Component {
             top.forEach((piece, index) => {
                 if (
                     piece &&
-                    ((top[index] === middle[1] && top[index] === bottom[2]) ||
-                        (top[index] === middle[1] && top[index] === bottom[0]))
+                    ((top[0] === middle[1] && top[0] === bottom[2]) ||
+                        (top[2] === middle[1] && top[2] === bottom[0]))
                 ) {
-                    console.log("game over");
                     this.setState({
                         winMessage: "x wins a third time",
                         gameOver: true,
@@ -60,24 +65,33 @@ class TicTacToe extends Component {
                 }
             });
         }
-       
     };
 
-    takeTurn = ({row, index}) => {
+    takeTurn = ({ row, index }) => {
         const pieceValue = this.state.isCrossTurn ? "x" : "o";
-        let currentRow  = this.state[row];
-        if(currentRow[index] != "" || this.state.gameOver){
+        let currentRow = this.state[row];
+        if (currentRow[index] != "" || this.state.gameOver) {
             return;
         }
         currentRow[index] = pieceValue;
-        console.log(pieceValue)
 
         this.setState({
             isCrossTurn: !this.state.isCrossTurn,
-            [row]: currentRow
-        })
+            [row]: currentRow,
+        });
 
         this.checkWin();
+    };
+
+    resetGame = () => {
+        this.setState({
+            isCrossTurn: false,
+            gameOver: false,
+            winMessage: "",
+            top: ["", "", ""],
+            middle: ["", "", ""],
+            bottom: ["", "", ""],
+        });
     };
 
     render() {
@@ -96,13 +110,18 @@ class TicTacToe extends Component {
                 <View style={styles.gameBoard}>
                     {/* Top Row */}
                     <View style={styles.row}>
-                        <TouchableOpacity onPress={()=>this.takeTurn({row: "top", index: 0})}
+                        <TouchableOpacity
+                            onPress={() =>
+                                this.takeTurn({ row: "top", index: 0 })
+                            }
                             style={[styles.gamePiece, styles.bottom]}
                         >
                             <Text style={styles.text}>{top[0]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                        onPress={()=>this.takeTurn({row: "top", index: 1})}
+                            onPress={() =>
+                                this.takeTurn({ row: "top", index: 1 })
+                            }
                             style={[
                                 styles.gamePiece,
                                 styles.left,
@@ -113,7 +132,9 @@ class TicTacToe extends Component {
                             <Text style={styles.text}>{top[1]}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                        onPress={()=> this.takeTurn({row: "top", index: 2})}
+                            onPress={() =>
+                                this.takeTurn({ row: "top", index: 2 })
+                            }
                             style={[styles.gamePiece, styles.bottom]}
                         >
                             <Text style={styles.text}>{top[2]}</Text>
@@ -123,14 +144,18 @@ class TicTacToe extends Component {
                     {/* Middle row */}
                     <View style={styles.row}>
                         <TouchableOpacity
-                        onPress={()=> this.takeTurn({row: "middle", index: 0})}
+                            onPress={() =>
+                                this.takeTurn({ row: "middle", index: 0 })
+                            }
                             style={[styles.gamePiece, styles.bottom]}
                         >
                             <Text style={styles.text}>{middle[0]}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                        onPress={()=> this.takeTurn({row: "middle", index: 1})}
+                            onPress={() =>
+                                this.takeTurn({ row: "middle", index: 1 })
+                            }
                             style={[
                                 styles.gamePiece,
                                 styles.bottom,
@@ -142,7 +167,9 @@ class TicTacToe extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                        onPress={()=> this.takeTurn({row: "middle", index: 2})}
+                            onPress={() =>
+                                this.takeTurn({ row: "middle", index: 2 })
+                            }
                             style={[styles.gamePiece, styles.bottom]}
                         >
                             <Text style={styles.text}>{middle[2]}</Text>
@@ -151,14 +178,19 @@ class TicTacToe extends Component {
 
                     {/* Bottom row */}
                     <View style={styles.row}>
-                        <TouchableOpacity 
-                        onPress={()=> this.takeTurn({row: "bottom", index: 0})}
-                        style={[styles.gamePiece]}>
+                        <TouchableOpacity
+                            onPress={() =>
+                                this.takeTurn({ row: "bottom", index: 0 })
+                            }
+                            style={[styles.gamePiece]}
+                        >
                             <Text style={styles.text}>{bottom[0]}</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                        onPress={()=> this.takeTurn({row: "bottom", index: 1})}
+                            onPress={() =>
+                                this.takeTurn({ row: "bottom", index: 1 })
+                            }
                             style={[
                                 styles.gamePiece,
                                 styles.left,
@@ -168,14 +200,20 @@ class TicTacToe extends Component {
                             <Text style={styles.text}>{bottom[1]}</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity 
-                        onPress={()=> this.takeTurn({row: "bottom", index: 2})}
-                        style={[styles.gamePiece]}>
+                        <TouchableOpacity
+                            onPress={() =>
+                                this.takeTurn({ row: "bottom", index: 2 })
+                            }
+                            style={[styles.gamePiece]}
+                        >
                             <Text style={styles.text}>{bottom[2]}</Text>
                         </TouchableOpacity>
                     </View>
-                            <Text>{this.state.isCrossTurn ? "X turn" : "O turn" }</Text>
+                    <Text>{this.state.isCrossTurn ? "X turn" : "O turn"}</Text>
                     <Text>{this.state.winMessage}</Text>
+                    <Button onPress={this.resetGame}>
+                        <Text>Reset Game</Text>
+                    </Button>
                 </View>
             </View>
         );
@@ -192,7 +230,7 @@ const styles = StyleSheet.create({
     text: {
         color: "#fff",
         fontSize: 50,
-        paddingBottom: 10
+        paddingBottom: 10,
     },
     gamePiece: {
         height: 100,
