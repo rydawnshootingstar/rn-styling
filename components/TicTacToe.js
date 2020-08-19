@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
-    Container,
     Header,
     Title,
     View,
     Text,
     Button,
-    Content,
 } from "native-base";
 
 class TicTacToe extends Component {
@@ -71,6 +69,7 @@ class TicTacToe extends Component {
             }
         }
 
+        // ties
         if (!gameOver) {
             if (
                 top.every((piece) => piece) &&

@@ -44,8 +44,6 @@ class DiceRoller extends React.Component {
     };
 
     render() {
-        console.log(this.state.diceValue);
-        console.log(this.state.rolling);
         return (
             <View
                 style={{

@@ -8,6 +8,10 @@ import DiceRoller from './components/DiceRoller';
 import CurrencyConverter from './components/CurrencyConverter';
 import BirbBook from './components/BirbBook';
 import TicTacToe from './components/TicTacToe';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import { NavigationContainer } from "@react-navigation/native";
+
+const Drawer = createDrawerNavigator();
 
 export default class App extends React.Component {
     constructor(props){
@@ -28,10 +32,18 @@ export default class App extends React.Component {
 
     render() {
        return !this.state.isReady ? <AppLoading /> : (
-           <Container>
+           <NavigationContainer>
+               <Container>
                {/* <BirbBook /> */}
-               <TicTacToe />
-           </Container>
+               {/* <TicTacToe /> */}
+               <Drawer.Navigator drawerPosition={"left"} drawerType={'slide'}>
+                   <Drawer.Screen name="Tic Tac Toe" component={TicTacToe} />
+                   <Drawer.Screen name="Bird Book" component={BirbBook} />
+                   <Drawer.Screen name="Currency Converter" component={CurrencyConverter} />
+                   <Drawer.Screen name="Dice Roller" component={DiceRoller} />
+               </Drawer.Navigator>
+               </Container>
+           </NavigationContainer>
        )
     }
 }
