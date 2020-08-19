@@ -30,10 +30,14 @@ class TicTacToe extends Component {
             !gameOver &&
             (top.every((piece) => piece && piece === top[0]) ||
                 middle.every((piece) => piece && piece === middle[0]) ||
-                bottom.every((piece) => piece && piece === top[0]))
+                bottom.every((piece) => piece && piece === bottom[0]))
         ) {
-            this.setState({ winMessage: "x wins", gameOver: true });
+            this.setState({
+                winMessage: `${this.state.isCrossTurn ? "x" : "o"} wins! horiz`,
+                gameOver: true,
+            });
         }
+
         // vertical wins
         if (!gameOver) {
             top.forEach((piece, index) => {
@@ -43,7 +47,7 @@ class TicTacToe extends Component {
                     top[index] === bottom[index]
                 ) {
                     this.setState({
-                        winMessage: "x wins again",
+                        winMessage: `${piece} wins! vert`,
                         gameOver: true,
                     });
                 }
@@ -52,18 +56,23 @@ class TicTacToe extends Component {
 
         // diagonal wins
         if (!gameOver) {
-            top.forEach((piece, index) => {
-                if (
-                    piece &&
-                    ((top[0] === middle[1] && top[0] === bottom[2]) ||
-                        (top[2] === middle[1] && top[2] === bottom[0]))
-                ) {
-                    this.setState({
-                        winMessage: "x wins a third time",
-                        gameOver: true,
-                    });
-                }
-            });
+            if (
+                (top[0] !== "" &&
+                    top[0] === middle[1] &&
+                    middle[1] === bottom[2]) ||
+                (top[2] !== "" &&
+                    top[2] === middle[1] &&
+                    middle[1] === bottom[0])
+            ) {
+                this.setState({
+                    winMessage: `${middle[1]} wins! diag`,
+                    gameOver: true,
+                });
+            }
+        }
+
+        if(!gameOver){
+           // TODO: all are full but no winner lol
         }
     };
 
@@ -221,7 +230,12 @@ class TicTacToe extends Component {
 }
 
 const styles = StyleSheet.create({
-    gameBoard: {},
+    gameBoard: {
+        marginTop: 200,
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
     row: {
         height: 100,
         width: 300,
