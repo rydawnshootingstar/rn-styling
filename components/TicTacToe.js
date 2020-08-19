@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
-    Header,
-    Title,
     View,
     Text,
     Button,
 } from "native-base";
+import ScreenHeader from './ScreenHeader';
 
 class TicTacToe extends Component {
     constructor(props) {
@@ -115,14 +114,8 @@ class TicTacToe extends Component {
         const { top, middle, bottom } = this.state;
 
         return (
-            <View>
-                <Header>
-                    <Title
-                        style={{ width: "100%", textAlignVertical: "center" }}
-                    >
-                        Tic Tac Toe
-                    </Title>
-                </Header>
+            <View style={styles.rootView}>
+            <ScreenHeader title={"Tic Tac Toe"} navigation={this.props.navigation} />                
 
                 <View style={styles.gameBoard}>
                     <Text style={styles.turnText}>
@@ -240,8 +233,11 @@ class TicTacToe extends Component {
 }
 
 const styles = StyleSheet.create({
+    rootView: {
+        backgroundColor: "#fff",
+        height: '100%'
+    },
     gameBoard: {
-        marginTop: 300,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",

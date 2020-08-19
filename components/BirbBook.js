@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Title, Header, Content } from "native-base";
 import moment from "moment";
 import BirbPost from "./BirbPost";
+import ScreenHeader from './ScreenHeader';
 
 const posts = new Array(10).fill(
     {
@@ -20,13 +21,7 @@ class BirbBook extends Component {
     render() {
         return (
             <Container>
-                <Header>
-                    <Title
-                        style={{ width: "100%", textAlignVertical: "center" }}
-                    >
-                        BirdBook
-                    </Title>
-                </Header>
+                <ScreenHeader navigation={this.props.navigation} title={"BirbBook"} />
                 <Content>
                     {posts.map((post, index) => (
                         <BirbPost key={index} post={post} />

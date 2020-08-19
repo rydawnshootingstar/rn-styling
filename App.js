@@ -33,7 +33,7 @@ export default class App extends React.Component {
     render() {
        return !this.state.isReady ? <AppLoading /> : (
            <NavigationContainer>
-               <Container>
+               
                {/* <BirbBook /> */}
                {/* <TicTacToe /> */}
                <Drawer.Navigator drawerPosition={"left"} drawerType={'slide'}>
@@ -42,7 +42,7 @@ export default class App extends React.Component {
                    <Drawer.Screen name="Currency Converter" component={CurrencyConverter} />
                    <Drawer.Screen name="Dice Roller" component={DiceRoller} />
                </Drawer.Navigator>
-               </Container>
+         
            </NavigationContainer>
        )
     }

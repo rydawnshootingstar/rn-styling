@@ -1,5 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, Image, StyleSheet, Text } from "react-native";
+import ScreenHeader from './ScreenHeader';
 
 class DiceRoller extends React.Component {
     constructor(props) {
@@ -45,6 +46,8 @@ class DiceRoller extends React.Component {
 
     render() {
         return (
+            <View style={{height: "100%"}}>
+                <ScreenHeader style={{alignSelf: "flex-start"}} navigation={this.props.navigation} title={"Dice Roller"} />
             <View
                 style={{
                     flex: 1,
@@ -85,6 +88,7 @@ class DiceRoller extends React.Component {
                         {this.state.rolling ? "Rolling" : "Roll"}
                     </Text>
                 </TouchableOpacity>
+            </View>
             </View>
         );
     }

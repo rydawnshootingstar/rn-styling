@@ -1,10 +1,9 @@
 import React from "react";
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, Image, TextInput } from "react-native";
+import { StyleSheet, View, Text, Image, TextInput } from "react-native";
+import {Container, Content} from 'native-base';
+import ScreenHeader from './ScreenHeader';
 
-
-// keyboardType is cool
-
-// TODO: fix scrolling
+// styling is crazy because of switching from just react native and style sheet to native base, but who cares?
 
 let conversionValues = [];
 
@@ -35,19 +34,17 @@ class CurrencyConverter extends React.Component {
     render() {
         return (
             
-            <SafeAreaView style={styles.container}>
+            <Container contentContainertyle={styles.container}>
+                <ScreenHeader navigation={this.props.navigation} title={"Currency Converter"} />
                 {this.state.loading ? 
-                <View>
+                <View style={styles.container}>
                     <Image source={require('../assets/moneySpin.gif')} />
                     <Text>Loading...</Text>
                     <Text style={styles.errorText}>{this.state.errorMessage}</Text>
                 </View>
                 :
-              <ScrollView
-              style={{flex:1}}
-              contentContainerStyle={styles.container}
-              scrollEnabled={true}
-              >
+              <Content>
+                  <View style={{flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#019031"}}>
                 <Text style={styles.header}>Currency Conversion</Text>
                 <Text style={styles.subheader}>Convert dollars to a number of different currencies</Text>
                 <TextInput
@@ -74,10 +71,11 @@ class CurrencyConverter extends React.Component {
                             : "0.00"}
                     </Text>
                 ))}
-                </ScrollView> 
+                </View>
+                </Content> 
               
     }
-            </SafeAreaView>
+            </Container>
         );
     }
 }
@@ -86,6 +84,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: "100%",
+        height: "100%",
         backgroundColor: "#019031",
         justifyContent: "flex-start",
         alignItems: "center",
