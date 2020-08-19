@@ -33,7 +33,7 @@ class TicTacToe extends Component {
                 bottom.every((piece) => piece && piece === bottom[0]))
         ) {
             this.setState({
-                winMessage: `${this.state.isCrossTurn ? "x" : "o"} wins! horiz`,
+                winMessage: `${this.state.isCrossTurn ? "X" : "O"} wins!`,
                 gameOver: true,
             });
         }
@@ -47,7 +47,7 @@ class TicTacToe extends Component {
                     top[index] === bottom[index]
                 ) {
                     this.setState({
-                        winMessage: `${piece} wins! vert`,
+                        winMessage: `${piece} wins!`,
                         gameOver: true,
                     });
                 }
@@ -65,19 +65,28 @@ class TicTacToe extends Component {
                     middle[1] === bottom[0])
             ) {
                 this.setState({
-                    winMessage: `${middle[1]} wins! diag`,
+                    winMessage: `${middle[1]} wins!`,
                     gameOver: true,
                 });
             }
         }
 
-        if(!gameOver){
-           // TODO: all are full but no winner lol
+        if (!gameOver) {
+            if (
+                top.every((piece) => piece) &&
+                middle.every((piece) => piece) &&
+                bottom.every((piece) => piece)
+            ) {
+                this.setState({
+                    gameOver: true,
+                    winMessage: "DRAW!",
+                });
+            }
         }
     };
 
     takeTurn = ({ row, index }) => {
-        const pieceValue = this.state.isCrossTurn ? "x" : "o";
+        const pieceValue = this.state.isCrossTurn ? "X" : "O";
         let currentRow = this.state[row];
         if (currentRow[index] != "" || this.state.gameOver) {
             return;
@@ -117,6 +126,9 @@ class TicTacToe extends Component {
                 </Header>
 
                 <View style={styles.gameBoard}>
+                    <Text style={styles.turnText}>
+                        {this.state.isCrossTurn ? "X's turn" : "O's turn"}
+                    </Text>
                     {/* Top Row */}
                     <View style={styles.row}>
                         <TouchableOpacity
@@ -218,9 +230,8 @@ class TicTacToe extends Component {
                             <Text style={styles.text}>{bottom[2]}</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text>{this.state.isCrossTurn ? "X turn" : "O turn"}</Text>
-                    <Text>{this.state.winMessage}</Text>
-                    <Button onPress={this.resetGame}>
+                    <Text style={styles.winText}>{this.state.winMessage}</Text>
+                    <Button style={styles.resetButton} onPress={this.resetGame}>
                         <Text>Reset Game</Text>
                     </Button>
                 </View>
@@ -231,7 +242,7 @@ class TicTacToe extends Component {
 
 const styles = StyleSheet.create({
     gameBoard: {
-        marginTop: 200,
+        marginTop: 300,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -242,16 +253,16 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     text: {
-        color: "#fff",
+        color: "#487EB0",
         fontSize: 50,
         paddingBottom: 10,
     },
     gamePiece: {
         height: 100,
         width: 100,
-        backgroundColor: "#000",
-        color: "#fff",
-        borderColor: "#0fa",
+        backgroundColor: "#fff",
+        color: "#000",
+        borderColor: "#4BCFFA",
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
@@ -267,6 +278,25 @@ const styles = StyleSheet.create({
     },
     left: {
         borderLeftWidth: 5,
+    },
+    resetButton: {
+        marginLeft: "35%",
+    },
+    winText: {
+        color: "#019031",
+        fontSize: 30,
+        marginBottom: 20,
+        marginTop: 30,
+    },
+    turnText: {
+        alignSelf: "flex-start",
+        marginLeft: 10,
+        fontSize: 30,
+        marginBottom: 75,
+        color: "#30336B",
+    },
+    winPieces: {
+        color: "#67E6DC",
     },
 });
 
