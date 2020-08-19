@@ -7,6 +7,7 @@ import FlexGrid from "./components/FlexGrid";
 import DiceRoller from './components/DiceRoller';
 import CurrencyConverter from './components/CurrencyConverter';
 import BirbBook from './components/BirbBook';
+import TicTacToe from './components/TicTacToe';
 
 export default class App extends React.Component {
     constructor(props){
@@ -28,7 +29,8 @@ export default class App extends React.Component {
     render() {
        return !this.state.isReady ? <AppLoading /> : (
            <Container>
-               <BirbBook />
+               {/* <BirbBook /> */}
+               <TicTacToe />
            </Container>
        )
     }
